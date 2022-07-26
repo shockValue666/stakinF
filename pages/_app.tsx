@@ -3,8 +3,8 @@ import Head from "next/head"
 import { ThemeProvider } from "theme-ui"
 import Router, { AppProps } from "next/dist/shared/lib/router/router"
 import dynamic from "next/dynamic"
-import * as dotenv from 'dotenv'
-dotenv.config()
+// import * as dotenv from 'dotenv'
+// dotenv.config()
 
 
 // import "nprogress/nprogress.css" //styles of nprogress
