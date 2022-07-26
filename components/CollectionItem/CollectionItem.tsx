@@ -30,6 +30,8 @@ const CollectionItem = (props: Props) => {
   const handleOnClick = (item: NFT) => () => onClick ? onClick(item) : true
   const handleKeyDown =
     (item: NFT) => (e: React.KeyboardEvent<HTMLDivElement>) => {
+
+      console.log("clickedddddddd")
       if (onClick && e.keyCode == 13) {
         onClick(item)
       }
@@ -67,7 +69,7 @@ const CollectionItem = (props: Props) => {
         tabIndex={1}
         variant="resetted"
         className="toggle-menu"
-        onClick={handleDropdownToggle}
+        onClick={()=>{handleDropdownToggle();console.log("gamw ti poutana ti panagia")}}
         sx={{
           display: "flex",
           position: "absolute",

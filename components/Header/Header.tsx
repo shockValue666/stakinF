@@ -37,7 +37,7 @@ const Header = ({ farmId, setFarmId }: Props) => {
             <Flex as="a" sx={{ alignItems: "center", flexDirection: "column" }}>
               <Flex sx={{ alignItems: "center" }}>
                 <Text as="h1" variant="headingSpecial" ml=".4rem">
-                  GEM
+                  DEATH
                 </Text>
 
                 <img
@@ -71,6 +71,32 @@ const Header = ({ farmId, setFarmId }: Props) => {
             &nbsp;&nbsp;&nbsp;&#8226;&nbsp;
             {process.env.NEXT_PUBLIC_CONNECTION_NETWORK}
           </Text>
+
+          
+          {/* //home button */}
+    
+
+            <a href="https://depravedscientists.online/" target="_blank" style={{marginRight:"10%"}}>
+              <Button
+                sx={{
+                  padding: ".8rem",
+                  marginRight:"10%",
+                  "@media(min-width: 768px)": {
+                  },
+                  background:"rgba(201,55,173,255)",
+                  fontSize:"20px"
+                }}
+              >
+                home
+                </Button>
+            </a>
+
+
+
+          {/* home button end */}
+
+
+
 
           <Flex
             as="nav"
@@ -127,7 +153,7 @@ const Header = ({ farmId, setFarmId }: Props) => {
             >
               <CloseIcon />
             </Button>
-            {isChangingFarmId && (
+            {/* {isChangingFarmId && (
               <Input
                 sx={{
                   fontSize: "1.1rem",
@@ -140,9 +166,9 @@ const Header = ({ farmId, setFarmId }: Props) => {
                 value={farmId}
                 onChange={(e) => setFarmId(e.target.value)}
               />
-            )}
+            )} */}
 
-            <a
+            {/* <a
               tabIndex={0}
               sx={{
                 margin: "0 auto",
@@ -152,7 +178,7 @@ const Header = ({ farmId, setFarmId }: Props) => {
               onClick={() => setIsChangingFarmId((prev) => !prev)}
             >
               (Change Farm ID)
-            </a>
+            </a> */}
 
             <WalletManager />
           </Flex>

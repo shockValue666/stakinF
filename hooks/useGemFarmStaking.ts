@@ -359,6 +359,12 @@ const useGemFarmStaking = (farmId: string) => {
         .toString()
     : null
 
+    const availableB = farmerAccount?.rewardB
+    ? farmerAccount.rewardB.accruedReward
+        .sub(farmerAccount.rewardB.paidOutReward)
+        .toString()
+    : null
+
   return {
     walletNFTs,
     farmerAccount,
@@ -367,6 +373,7 @@ const useGemFarmStaking = (farmId: string) => {
     selectedWalletItems,
     isLocked,
     availableA,
+    availableB,
     feedbackStatus,
     handleStakeButtonClick,
     handleUnstakeButtonClick,

@@ -22,6 +22,7 @@ const StakePage = () => {
     selectedWalletItems,
     isLocked,
     availableA,
+    availableB,
     feedbackStatus,
     handleStakeButtonClick,
     handleUnstakeButtonClick,
@@ -50,8 +51,9 @@ const StakePage = () => {
           padding: "0 1.6rem",
         }}
       >
-        <Heading>Your staking account</Heading>
-        <Text>Below you can stake, unstake and collect rewards.</Text>
+        {/* <Heading>Your staking account</Heading> */}
+        <Heading sx={{fontSize:"30px"}}>Stake to earn $DS</Heading>
+        {/* <Text>Below you can stake, unstake and collect rewards.</Text> */}
 
         {!publicKey ? (
           /** Render nothing if there is no wallet connected. */
@@ -76,6 +78,9 @@ const StakePage = () => {
           <Button
             sx={{
               margin: "3.2rem 0",
+              background:"rgba(248,199,140,255)",
+              color:"#cc0e52",
+              fontSize:"20px",
             }}
             onClick={handleInitStakingButtonClick}
           >
@@ -106,7 +111,9 @@ const StakePage = () => {
                       }}
                       src="images/gemtransparent.gif"
                     />
-                    <Text>
+                    <Text
+                      sx={{fontSize:"20px"}}
+                    >
                       NFTs staked:&nbsp;
                       {farmerAccount?.gemsStaked.toNumber()}
                     </Text>
@@ -114,6 +121,7 @@ const StakePage = () => {
                   <Text
                     sx={{
                       textAlign: "center",
+                      fontSize:"20px"
                     }}
                   >
                     Vault state: <b>{isLocked ? "locked" : "unlocked"}</b>
@@ -122,9 +130,19 @@ const StakePage = () => {
                   <Text
                     sx={{
                       textAlign: "center",
+                      fontSize:"20px"
                     }}
                   >
                     Account status: <b>{farmerStatus}</b>
+                    <br />
+                  </Text>
+                  <Text
+                    sx={{
+                      textAlign: "center",
+                      fontSize:"20px"
+                    }}
+                  >
+                    How to stake: Select your NFTs (just click on them)  == {`>>`} Click "Deposit Selected" == {`>>`} Click "Your Vault" == {`>>`}  Click Stake
                     <br />
                   </Text>
                 </Flex>
@@ -148,6 +166,11 @@ const StakePage = () => {
                     disabled={
                       !(farmerStatus === "unstaked" && farmerVaultNFTs?.length)
                     }
+                    sx={{
+                      background:"rgba(248,199,140,255)",
+                        color:"#cc0e52",
+                        fontSize:"20px"
+                    }}
                   >
                     Stake
                   </Button>
@@ -159,6 +182,11 @@ const StakePage = () => {
                         farmerStatus === "pendingCooldown"
                       )
                     }
+                    sx={{
+                      background:"rgba(201,55,173,255)",
+                      fontSize:"20px"
+                        
+                    }}
                   >
                     {farmerStatus === "pendingCooldown"
                       ? "End cooldown"
@@ -167,6 +195,11 @@ const StakePage = () => {
                   <Button
                     onClick={handleClaimButtonClick}
                     disabled={!Number(availableA)}
+                    sx={{
+                      background:"rgba(248,199,140,255)",
+                        color:"#cc0e52",
+                        fontSize:"20px"
+                    }}
                   >
                     Claim{" "}
                     <img
@@ -182,7 +215,37 @@ const StakePage = () => {
                       0
                     )}
                   </Button>
-                  <Button onClick={handleRefreshRewardsButtonClick}>
+
+                      {/* reward b */}
+                  <Button
+                    onClick={handleClaimButtonClick}
+                    disabled={!Number(availableB)}
+                    sx={{
+                      background:"rgba(201,55,173,255)",
+                      fontSize:"20px"
+                    }}
+                  >
+                    Claim{" "}
+                    <img
+                      sx={{
+                        margin: "0 .4rem 0 .8rem",
+                        maxHeight: "2.4rem",
+                      }}
+                      src="images/solana-sol-logo.png"
+                    />
+                    {availableB ? (
+                      // <b>{(availableB / 1000000000).toFixed(2)}</b>
+                      <b>{availableB}</b>
+                    ) : (
+                      0
+                    )}
+                  </Button>
+
+
+                  <Button onClick={handleRefreshRewardsButtonClick} sx={{
+                    background:"rgba(248,199,140,255)",
+                        color:"#cc0e52",
+                        fontSize:"20px"}}>
                     Refresh
                   </Button>
                 </Flex>
@@ -214,8 +277,25 @@ const StakePage = () => {
               }}
             >
               <TabList>
-                <Tab>Your wallet</Tab>
-                <Tab>Your vault</Tab>
+                <Tab
+                  style={{
+                    background:"rgba(201,55,173,255)",
+                      fontSize:"20px"
+                  }}
+                >
+                  Your wallet
+                </Tab>
+                <Tab
+                  style={{
+                    background:"rgba(248,199,140,255)",
+                    color:"#cc0e52",
+                    fontSize:"20px",
+                    borderRadius:'5%',
+                    marginLeft:"2%"
+                  }}
+                >
+                  Your vault
+                </Tab>
               </TabList>
 
               <TabPanel>
@@ -276,6 +356,7 @@ const StakePage = () => {
                         <Text
                           sx={{
                             margin: "3.2rem 0 .8rem 0",
+                            fontSize:"30px"
                           }}
                           variant="small"
                         >
@@ -290,7 +371,7 @@ const StakePage = () => {
                           .join(", ")
                       : null} */}
                         {selectedWalletItems?.length && !isLocked ? (
-                          <Button onClick={handleMoveToVaultButtonClick}>
+                          <Button onClick={handleMoveToVaultButtonClick} sx={{background:"rgba(201,55,173,255)",fontSize:"20px"}}>
                             Deposit selected
                           </Button>
                         ) : null}
@@ -395,6 +476,8 @@ const StakePage = () => {
                             <Text
                               sx={{
                                 margin: "3.2rem 0 .8rem 0",
+
+                    fontSize:"30px"
                               }}
                               variant="small"
                             >
@@ -409,7 +492,7 @@ const StakePage = () => {
                             .map((NFT) => NFT.onchainMetadata.metaData.data.name)
                             .join(", ")} */}
                               {!isLocked ? (
-                                <Button onClick={handleMoveToWalletButtonClick}>
+                                <Button onClick={handleMoveToWalletButtonClick} sx={{background:"rgba(248,199,140,255)",color:"#cc0e52",fontSize:"20px",}}>
                                   Withdraw selected
                                 </Button>
                               ) : null}
@@ -422,6 +505,7 @@ const StakePage = () => {
                           sx={{
                             justifyContent: "center",
                             alignSelf: "stretch",
+                            fontSize:"30px"
                           }}
                         >
                           <Text>There are no NFTs on your vault.</Text>
