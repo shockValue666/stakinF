@@ -76,7 +76,7 @@ const Header = ({ farmId, setFarmId }: Props) => {
           {/* //home button */}
     
 
-            <a href="https://depravedscientists.online/" target="_blank" style={{marginRight:"10%"}}>
+            <a href="https://depravedscientists.online/" target="_blank" rel="noreferrer" style={{marginRight:"10%"}}>
               <Button
                 sx={{
                   padding: ".8rem",
