@@ -161,7 +161,7 @@ const StakePage = () => {
                     },
                   }}
                 >
-                  <Button
+                  {/* <Button
                     onClick={handleStakeButtonClick}
                     disabled={
                       !(farmerStatus === "unstaked" && farmerVaultNFTs?.length)
@@ -173,9 +173,9 @@ const StakePage = () => {
                     }}
                   >
                     Stake
-                  </Button>
-                  <Button
-                    onClick={handleUnstakeButtonClick}
+                  </Button> */}
+                  {/* <Button
+                    onClick={async ()=>{await handleUnstakeButtonClick(); await handleUnstakeButtonClick();}}
                     disabled={
                       !(
                         farmerStatus === "staked" ||
@@ -191,7 +191,7 @@ const StakePage = () => {
                     {farmerStatus === "pendingCooldown"
                       ? "End cooldown"
                       : "Unstake"}
-                  </Button>
+                  </Button> */}
                   <Button
                     onClick={handleClaimButtonClick}
                     disabled={!Number(availableA)}
@@ -342,9 +342,9 @@ const StakePage = () => {
                               sx={{
                                 maxWidth: "16rem",
                                 "> img": {
-                                  border: "3px solid transparent",
+                                  border: "5px solid ",
                                   borderColor: isSelected
-                                    ? "primary"
+                                    ? "rgba(201,55,173,255)"
                                     : "transparent",
                                 },
                               }}
@@ -360,7 +360,7 @@ const StakePage = () => {
                           }}
                           variant="small"
                         >
-                          Select NFTs to move them to your Vault.
+                          Select NFTs to Stake.
                         </Text>
                       ) : null}
                       <Text>
@@ -371,8 +371,9 @@ const StakePage = () => {
                           .join(", ")
                       : null} */}
                         {selectedWalletItems?.length && !isLocked ? (
-                          <Button onClick={handleMoveToVaultButtonClick} sx={{background:"rgba(201,55,173,255)",fontSize:"20px"}}>
-                            Deposit selected
+                          <Button onClick={async ()=>{await handleMoveToVaultButtonClick();await handleStakeButtonClick()}} sx={{background:"rgba(201,55,173,255)",fontSize:"30px"}}>
+                            {/* Deposit to Vault */}
+                            Stake
                           </Button>
                         ) : null}
                       </Text>
@@ -455,16 +456,17 @@ const StakePage = () => {
                                   key={item.onchainMetadata.mint}
                                   item={item}
                                   onClick={
-                                    !isLocked
+                                    // !isLocked
+                                    isLocked
                                       ? handleVaultItemClick
                                       : () => true
                                   }
                                   sx={{
                                     maxWidth: "16rem",
                                     "> img": {
-                                      border: "3px solid transparent",
+                                      border: "5px solid transparent",
                                       borderColor: isSelected
-                                        ? "primary"
+                                        ? "rgba(248,199,140,255)"
                                         : "transparent",
                                     },
                                   }}
@@ -472,7 +474,8 @@ const StakePage = () => {
                               )
                             })}
                           </div>
-                          {farmerVaultNFTs.length && !isLocked ? (
+                          {/* {farmerVaultNFTs.length && !isLocked ? ( */}
+                          {farmerVaultNFTs.length && isLocked ? (
                             <Text
                               sx={{
                                 margin: "3.2rem 0 .8rem 0",
@@ -481,7 +484,7 @@ const StakePage = () => {
                               }}
                               variant="small"
                             >
-                              Select NFTs to withdraw them to your wallet.
+                              Select NFTs to Unstake.
                             </Text>
                           ) : null}
 
@@ -491,9 +494,11 @@ const StakePage = () => {
                           {selectedVaultItems
                             .map((NFT) => NFT.onchainMetadata.metaData.data.name)
                             .join(", ")} */}
-                              {!isLocked ? (
-                                <Button onClick={handleMoveToWalletButtonClick} sx={{background:"rgba(248,199,140,255)",color:"#cc0e52",fontSize:"20px",}}>
-                                  Withdraw selected
+                              {/* {!isLocked ? ( */}
+                              {isLocked ? (
+                                <Button onClick={async ()=>{await handleUnstakeButtonClick();await handleUnstakeButtonClick();await handleMoveToWalletButtonClick()}} sx={{background:"rgba(248,199,140,255)",color:"#cc0e52",fontSize:"30px",}}>
+                                  {/* Withdraw selected */}
+                                  Unstake
                                 </Button>
                               ) : null}
                             </>
@@ -508,7 +513,8 @@ const StakePage = () => {
                             fontSize:"30px"
                           }}
                         >
-                          <Text>There are no NFTs on your vault.</Text>
+                          {/* <Text>There are no NFTs on your vault.</Text> */}
+                          <Text>0 NFTs staked</Text>
                         </Flex>
                       )
                     ) : /** No vaultNFTs and public key, means it is loading */
