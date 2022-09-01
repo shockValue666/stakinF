@@ -37,7 +37,7 @@ const useWalletNFTs = () => {
 
       // }
       // console.log("LMAOOOO0 NFTs: ",NFTs[0].onchainMetadata.data.creators[0])
-      const nreNfts = NFTs.filter(nft=>{return nft.onchainMetadata.data.creators[0].address == "CaYkvNwjjSB6Yvpu74Yf7dLYujWtNQvX2Uash5KWiM4K"})
+      const nreNfts = NFTs.filter(nft=>{return nft.onchainMetadata.data.creators[0].address == "HCQMQt9f2h7kc6bU2dgsBqbaT23xbaLWvDVRVMUhz34N"})
       console.log("nreNFTS: ",nreNfts)
       setWalletNFTs(nreNfts)
     }
