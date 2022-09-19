@@ -25,7 +25,8 @@ const theme: Theme = {
     background: "rgb(4, 4, 3)",
     text: "rgb(226, 217, 211)",
     primary: "rgb(48, 114, 180, .7)",
-    primaryGradient: getGradient("rgb(48, 114, 180, .7)"),
+    // primaryGradient: getGradient("rgb(48, 114, 180, .7)"),
+    primaryGradient: getGradient("rgb(173, 3, 252, .7)"),
     heading: "rgb(226, 217, 211)",
     background2: "#1E1E24",
     backgroundGradient: getGradient("rgb(4, 4, 3)"),
@@ -210,6 +211,11 @@ const theme: Theme = {
 
   styles: {
     ...base.styles,
+    styles: {
+      progress: {
+        color: 'red',
+      },
+    },
 
     root: {
       ...base.styles?.root,

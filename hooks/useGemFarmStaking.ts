@@ -386,6 +386,7 @@ const useGemFarmStaking = (farmId: string) => {
     handleMoveToWalletButtonClick,
     handleVaultItemClick,
     handleRefreshRewardsButtonClick,
+    farmAccount,
   }
 }
 

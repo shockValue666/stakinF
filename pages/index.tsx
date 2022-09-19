@@ -1,5 +1,5 @@
 /** @jsxImportSource theme-ui */
-import { Flex, Text, Heading, Spinner, Button, Container } from "theme-ui"
+import { Flex, Text,Progress, Heading, Spinner, Button, Container } from "theme-ui"
 
 import CollectionItem from "@/components/CollectionItem/CollectionItem"
 import useGemFarmStaking from "hooks/useGemFarmStaking"
@@ -9,7 +9,7 @@ import { useWallet } from "@solana/wallet-adapter-react"
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
 import Header from "@/components/Header/Header"
 import { LoadingIcon } from "@/components/icons/LoadingIcon"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const StakePage = () => {
   const [farmId, setFarmId] = useState(process.env.NEXT_PUBLIC_GEMFARM_ID || "")
@@ -35,9 +35,23 @@ const StakePage = () => {
     handleVaultItemClick,
     handleInitStakingButtonClick,
     handleRefreshRewardsButtonClick,
+    farmAccount
   } = useGemFarmStaking(farmId)
 
   const { publicKey } = useWallet()
+  // console.log("public keyyyyyyy: ",publicKey.toString())
+  console.log("farmAccount: ",farmAccount)
+  const [solPrice,setSolPrice] = useState(null)
+
+
+  useEffect(() => {
+    fetch(`https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd`)
+    .then((response) => response.json().then((jsonData)=>{
+      console.log("solana price :",jsonData.solana.usd)
+      setSolPrice(jsonData.solana.usd)
+    }));
+  }, []);
+
 
   return (
     <Container>
@@ -118,6 +132,60 @@ const StakePage = () => {
                       {farmerAccount?.gemsStaked.toNumber()}
                     </Text>
                   </Flex>
+                  <Flex
+                    sx={{
+                      gap: ".4rem",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin:"10px"
+                    }}
+                  >
+                    <img
+                      sx={{
+                        maxHeight: "2.4rem",
+                      }}
+                      src="images/gemtransparent.gif"
+                    />
+                    {
+                      farmAccount && (
+                        <>
+                      <Text
+                      sx={{fontSize:"20px"}}
+                    >
+                      Total NFTs staked:&nbsp;
+                      {farmAccount?.gemsStaked.toNumber()}/50
+                    </Text>
+                    </>
+                    )
+                    }
+                    </Flex>
+                    <Flex
+                    sx={{
+                      gap: ".4rem",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin:"10px"
+                    }}
+                  >
+                    {
+                      farmAccount && (
+                        <>
+                    <Progress max={1} value={farmAccount?.gemsStaked.toNumber()/50} sx={{width:"500px",color:"pink"}}>
+                      </Progress>
+                    </>
+                    )
+                    }
+                    </Flex>
+                    <Text
+                    sx={{
+                      textAlign: "center",
+                      fontSize:"20px",
+                      margin:"10px"
+                    }}
+                  >
+                    TVL: <b>${(farmAccount?.gemsStaked.toNumber() * solPrice).toFixed(2)}</b>
+                    <br />
+                  </Text>
                   <Text
                     sx={{
                       textAlign: "center",
@@ -136,15 +204,6 @@ const StakePage = () => {
                     Account status: <b>{farmerStatus}</b>
                     <br />
                   </Text>
-                  <Text
-                    sx={{
-                      textAlign: "center",
-                      fontSize:"20px"
-                    }}
-                  >
-                    How to stake: Select your NFTs (just click on them)  == {`>>`} Click "Deposit Selected" == {`>>`} Click "Your Vault" == {`>>`}  Click Stake
-                    <br />
-                  </Text>
                 </Flex>
 
                 <Flex
@@ -161,37 +220,6 @@ const StakePage = () => {
                     },
                   }}
                 >
-                  {/* <Button
-                    onClick={handleStakeButtonClick}
-                    disabled={
-                      !(farmerStatus === "unstaked" && farmerVaultNFTs?.length)
-                    }
-                    sx={{
-                      background:"rgba(248,199,140,255)",
-                        color:"#cc0e52",
-                        fontSize:"20px"
-                    }}
-                  >
-                    Stake
-                  </Button> */}
-                  {/* <Button
-                    onClick={async ()=>{await handleUnstakeButtonClick(); await handleUnstakeButtonClick();}}
-                    disabled={
-                      !(
-                        farmerStatus === "staked" ||
-                        farmerStatus === "pendingCooldown"
-                      )
-                    }
-                    sx={{
-                      background:"rgba(201,55,173,255)",
-                      fontSize:"20px"
-                        
-                    }}
-                  >
-                    {farmerStatus === "pendingCooldown"
-                      ? "End cooldown"
-                      : "Unstake"}
-                  </Button> */}
                   <Button
                     onClick={handleClaimButtonClick}
                     disabled={!Number(availableA)}
@@ -326,6 +354,7 @@ const StakePage = () => {
                         }}
                       >
                         {walletNFTs.map((item) => {
+                          console.log(item)
                           const isSelected = selectedWalletItems.find(
                             (NFT) =>
                               NFT.onchainMetadata.mint ===
@@ -337,7 +366,7 @@ const StakePage = () => {
                               key={item.onchainMetadata.mint}
                               item={item}
                               onClick={
-                                !isLocked ? handleWalletItemClick : () => true
+                                !isLocked ? handleWalletItemClick : () => {console.log("some shit");true}
                               }
                               sx={{
                                 maxWidth: "16rem",
